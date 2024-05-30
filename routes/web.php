@@ -112,6 +112,7 @@ Route::prefix('admin/')->group(function () {
     Route::post('delivery-man-document-delete/{id}', [App\Http\Controllers\DeliveryManDocumentController::class, 'destroy']);
     Route::post('delivery-man-document-action', [App\Http\Controllers\DeliveryManDocumentController::class, 'action']);
     Route::get('users', [API\UserController::class, 'userListWeb']);
+    Route::get('address/{id}', [API\UserController::class, 'userAddressWeb']);
     Route::get('drivers', [API\UserController::class, 'userListWebDrivers']);
     Route::get('logout', [API\UserController::class, 'logoutweb']);
 

@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use App\Models\AppSetting;
 use App\Models\DeliveryManDocument;
 use App\Models\Payment;
+use App\Models\UserAddress;
 use App\Models\UserBankAccount;
 use App\Models\Wallet;
 use Illuminate\Support\Facades\DB;
@@ -881,6 +882,11 @@ class UserController extends Controller
         // return json_custom_response($response);
         // dd($items);
         return view('admin.users', compact('items'));
+    }
+    public function userAddressWeb($id){
+        $addresses = UserAddress::select('*')->where('user_id',$id)->get();
+        return view('admin.address',compact('addresses'));
+
     }
     public function userListWebDrivers(Request $request)
     {

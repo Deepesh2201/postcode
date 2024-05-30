@@ -189,9 +189,9 @@
                 <br>
 
                 {{-- Form Data Starts Here --}}
-                <form class="tablelist-form"  action="{{url('admin/saveOrderWeb')}}" method="POST">
+                <form class="tablelist-form" action="{{ url('admin/saveOrderWeb') }}" method="POST">
                     @csrf
-                {{-- <div class="grid grid-cols-12 gap-x-5" id="schedule" style="display: none;">
+                    {{-- <div class="grid grid-cols-12 gap-x-5" id="schedule" style="display: none;">
 
                     <div class="order-12 col-span-12 lg:col-span-6 2xl:order-1 card 2xl:col-span-3">
                         <div class="card-body">
@@ -260,162 +260,238 @@
 
 
 
-                <div class="card  p-5">
-                    <div class="card-body">
-                        <div class="grid grid-cols-12 2xl:grid-cols-12 ">
-                            <div class="col-span-12  md:col-span-6 lg:col-span-6 2xl:col-span-2">
+                    <div class="card  p-5">
+                        <div class="card-body">
+                            <div class="grid grid-cols-12 2xl:grid-cols-12 ">
+                                <div class="col-span-12  md:col-span-6 lg:col-span-6 2xl:col-span-2">
 
 
-                            </div><!--end col-->
-                            <div class="col-span-12  md:col-span-6 lg:col-span-6 2xl:col-span-2">
-
-                            </div><!--end col-->
-                        </div>
-
-
-                        <div class="mt-5">
-
-
-                            <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5 mb-3">
-                                <div class="col-span-12  md:col-span-4 lg:col-span-4 2xl:col-span-2">
-                                    <label class="inline-block mb-2 text-base font-medium">Customer <span
-                                            class="text-red-500">*</span></label>
-                                    @if( session('user')['user_type'] == 'admin')        
-                                    <select type="text" id="client_id" name="client_id"
-                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                        required>
-                                        @foreach ($customers as $customer)
-                                            <option value="{{ $customer->id }}">{{ $customer->name }}({{$customer->contact_number}})</option>
-                                        @endforeach
-                                    </select>
-                                    @else
-                                    <select type="text" id="client_id" name="client_id"
-                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                        required>
-                                        <option value="{{ session('user')['id'] }}">{{ session('user')['name']}}</option>
-                                       
-                                    </select>
-                                    @endif
-                                </div>
-                                <div class="col-span-12  md:col-span-3 lg:col-span-3 2xl:col-span-2">
-                                    <label class="inline-block mb-2 text-base font-medium">Parcel Type <span
-                                            class="text-red-500">*</span></label>
-                                    <select type="text" id="parcel_type" name="parcel_type"
-                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                        required>
-                                        @foreach ($parceltypes as $parceltype)
-                                            <option value="{{ $parceltype->id }}">{{ $parceltype->label }}</option>
-                                        @endforeach
-                                    </select>
-
-                                </div>
-
-                                <div class="col-span-12  md:col-span-2 lg:col-span-2 2xl:col-span-2">
-                                    <label class="inline-block mb-2 text-base font-medium">Weight(kgs) <span
-                                            class="text-red-500">*</span></label>
-                                    <input type="number" id="total_weight" name="total_weight"
-                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                        required>
-
-                                </div>
-
-                                <div class="col-span-12  md:col-span-2 lg:col-span-2 2xl:col-span-2">
-                                    <label class="inline-block mb-2 text-base font-medium">No. Of Parcels
-                                    <input type="number" id="total_parcel" name="total_parcel"
-                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                        >
-
-                                </div>
-
-
-                            </div>
-                            <hr>
-                            <br>
-                            <div class="grid grid-cols-12 gap-x-5">
-
-                                <div class="order-12 col-span-12 lg:col-span-6 2xl:order-1 card 2xl:col-span-3">
-                                    <div class="card-body">
-                                        <h6 class="mb-3 text-15">Pickup Information</h6>
-                                        <input type="hidden" value="1" id="status" name="status">
-                                        <label class="inline-block mb-2 text-base font-medium">Pickup Address <span
-                                                class="text-red-500">*</span></label>
-                                        <input type="text" id="pickup_address" name="pickup_address"
-                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                            required>
-                                        <br>
-                                        <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5 mb-3">
-                                            <div class="col-span-12  md:col-span-5 lg:col-span-5 2xl:col-span-2">
-                                                <label class="inline-block mb-2 text-base font-medium">Postal Code <span
-                                                        class="text-red-500">*</span></label>
-                                                <input type="text" id="pickup_point" name="pickup_point" onkeypress="calculate();"
-                                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                    required>
-                                            </div>
-                                            <div class="col-span-12  md:col-span-7 lg:col-span-7 2xl:col-span-2">
-                                                <label class="inline-block mb-2 text-base font-medium">Contact Number <span
-                                                        class="text-red-500">*</span></label>
-                                                <input type="text" id="pickup_contact" name="pickup_contact"
-                                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                    required>
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <label class="inline-block mb-2 text-base font-medium">Pickup Description <span
-                                                class="text-red-500">*</span></label>
-                                        <textarea id="pickup_instructions" name="pickup_instructions"
-                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                            required>
-                                        </textarea>
-                                    </div>
                                 </div><!--end col-->
-                                <div class="col-span-12 lg:col-span-6 order-[13] 2xl:order-1 card 2xl:col-span-3">
-                                    <div class="card-body">
-                                        <h6 class="mb-3 text-15">Delivery Information</h6>
-                                        <label class="inline-block mb-2 text-base font-medium">Delivery Address <span
+                                <div class="col-span-12  md:col-span-6 lg:col-span-6 2xl:col-span-2">
+
+                                </div><!--end col-->
+                            </div>
+
+
+                            <div class="mt-5">
+
+
+                                <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5 mb-3">
+                                    <div class="col-span-12  md:col-span-3 lg:col-span-3 2xl:col-span-2">
+                                        <label class="inline-block mb-2 text-base font-medium">Customer <span
                                                 class="text-red-500">*</span></label>
-                                        <input type="text" id="delivery_address" name="delivery_address"
+                                        @if (session('user')['user_type'] == 'admin')
+                                            <select type="text" id="client_id" name="client_id"
+                                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                required>
+                                                @foreach ($customers as $customer)
+                                                    <option value="{{ $customer->id }}">
+                                                        {{ $customer->name }}({{ $customer->contact_number }})</option>
+                                                @endforeach
+                                            </select>
+                                        @else
+                                            <select type="text" id="client_id" name="client_id"
+                                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                required>
+                                                <option value="{{ session('user')['id'] }}">{{ session('user')['name'] }}
+                                                </option>
+
+                                            </select>
+                                        @endif
+                                    </div>
+                                    <div class="col-span-12  md:col-span-2 lg:col-span-2 2xl:col-span-2">
+                                        <label class="inline-block mb-2 text-base font-medium">Designation</label>
+                                        <select type="text" id="parcel_type" name="parcel_type"
                                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                             required>
-                                        <br>
-                                        <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5 mb-3">
-                                            <div class="col-span-12  md:col-span-5 lg:col-span-5 2xl:col-span-2">
-                                                <label class="inline-block mb-2 text-base font-medium">Postal Code <span
-                                                        class="text-red-500">*</span></label>
-                                                <input type="text" id="delivery_point" name="delivery_point" onkeypress="calculate();"
-                                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                    required>
+                                            {{-- @foreach ($designations as $designation)
+                                            <option value="{{ $designation->id }}">{{ $designation->name }}</option>
+                                        @endforeach --}}
+                                        </select>
+
+                                    </div>
+                                    <div class="col-span-12  md:col-span-2 lg:col-span-2 2xl:col-span-2">
+                                        <label class="inline-block mb-2 text-base font-medium">Parcel Type <span
+                                                class="text-red-500">*</span></label>
+                                        <select type="text" id="parcel_type" name="parcel_type"
+                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                            required>
+                                            @foreach ($parceltypes as $parceltype)
+                                                <option value="{{ $parceltype->id }}">{{ $parceltype->label }}</option>
+                                            @endforeach
+                                        </select>
+
+                                    </div>
+
+                                    <div class="col-span-12  md:col-span-2 lg:col-span-2 2xl:col-span-2">
+                                        <label class="inline-block mb-2 text-base font-medium">Weight(kgs) <span
+                                                class="text-red-500">*</span></label>
+                                        <input type="number" id="total_weight" name="total_weight"
+                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                            required>
+
+                                    </div>
+
+                                    <div class="col-span-12 mt-2 md:col-span-2 lg:col-span-2 2xl:col-span-2">
+                                        <label class="inline-block mb-2 text-base font-medium">No. Of Parcels
+                                            <input type="number" id="total_parcel" name="total_parcel"
+                                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+
+                                    </div>
+
+
+                                </div>
+                                <hr>
+                                <br>
+                                <div class="grid grid-cols-12 gap-x-5">
+
+                                    <div class="order-12 col-span-12 lg:col-span-6 2xl:order-1 card 2xl:col-span-3">
+                                        <div class="card-body">
+                                            <h6 class="mb-3 text-15">Pickup Information</h6>
+                                            <hr><br>
+                                            <input type="hidden" value="1" id="status" name="status">
+                                            <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5 mb-3">
+                                                <div class="col-span-12  md:col-span-12 lg:col-span-12 2xl:col-span-2">
+                                                    <label class="inline-block mb-2 text-base font-medium">Select Address</label>
+                                                    <select type="text" id="pi_address" name="pi_address"
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                        >
+                                                        <option>New Address</option>
+                                                        {{-- @foreach ($address as $address)
+                                                            <option value="{{$address->id}}">{{$address->name}}</option>
+                                                        @endforeach --}}
+                                                    </select>
+                                                </div>
                                             </div>
-                                            <div class="col-span-12  md:col-span-7 lg:col-span-7 2xl:col-span-2">
-                                                <label class="inline-block mb-2 text-base font-medium">Contact Number <span
-                                                        class="text-red-500">*</span></label>
-                                                <input type="text" id="delivery_contact" name="delivery_contact"
-                                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                    required>
+                                            <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5 mb-3">
+                                                <div class="col-span-12  md:col-span-5 lg:col-span-5 2xl:col-span-2">
+                                                    <label class="inline-block mb-2 text-base font-medium">First Name <span
+                                                            class="text-red-500">*</span></label>
+                                                    <input type="text" id="pi_first_name" name="pi_first_name"
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                        required>
+                                                </div>
+                                                <div class="col-span-12  md:col-span-7 lg:col-span-7 2xl:col-span-2">
+                                                    <label class="inline-block mb-2 text-base font-medium">Last Name <span
+                                                            class="text-red-500">*</span></label>
+                                                    <input type="text" id="pi_last_name" name="pi_last_name"
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                        required>
+                                                </div>
                                             </div>
+
+                                            <label class="inline-block mb-2 text-base font-medium">Pickup Address <span
+                                                    class="text-red-500">*</span></label>
+                                            <input type="text" id="pickup_address" name="pickup_address"
+                                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                required>
+                                            <br>
+                                            <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5 mb-3">
+                                                <div class="col-span-12  md:col-span-5 lg:col-span-5 2xl:col-span-2">
+                                                    <label class="inline-block mb-2 text-base font-medium">Postal Code
+                                                        <span class="text-red-500">*</span></label>
+                                                    <input type="text" id="pickup_point" name="pickup_point"
+                                                        onkeypress="calculate();"
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                        required>
+                                                </div>
+                                                <div class="col-span-12  md:col-span-7 lg:col-span-7 2xl:col-span-2">
+                                                    <label class="inline-block mb-2 text-base font-medium">Contact Number
+                                                        <span class="text-red-500">*</span></label>
+                                                    <input type="text" id="pickup_contact" name="pickup_contact"
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                        required>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <label class="inline-block mb-2 text-base font-medium">Pickup Description <span
+                                                    class="text-red-500">*</span></label>
+                                            <textarea id="pickup_instructions" name="pickup_instructions"
+                                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                required>
+                                        </textarea>
                                         </div>
-                                        <br>
-                                        <label class="inline-block mb-2 text-base font-medium">Delivery Description <span
-                                                class="text-red-500">*</span></label>
-                                        <textarea id="delivery_instructions" name="delivery_instructions"
-                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                            required>
+                                    </div><!--end col-->
+                                    <div class="col-span-12 lg:col-span-6 order-[13] 2xl:order-1 card 2xl:col-span-3">
+                                        <div class="card-body">
+                                            <h6 class="mb-3 text-15">Delivery Information</h6>
+                                            <hr><br>
+                                            <input type="hidden" value="1" id="status" name="status">
+                                            <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5 mb-3">
+                                                <div class="col-span-12  md:col-span-12 lg:col-span-12 2xl:col-span-2">
+                                                    <label class="inline-block mb-2 text-base font-medium">Select Address</label>
+                                                    <select type="text" id="pi_address" name="pi_address"
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                        >
+                                                        <option>New Address</option>
+                                                        {{-- @foreach ($address as $address)
+                                                            <option value="{{$address->id}}">{{$address->name}}</option>
+                                                        @endforeach --}}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5 mb-3">
+                                                <div class="col-span-12  md:col-span-5 lg:col-span-5 2xl:col-span-2">
+                                                    <label class="inline-block mb-2 text-base font-medium">First Name <span
+                                                            class="text-red-500">*</span></label>
+                                                    <input type="text" id="di_first_name" name="di_first_name"
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                        required>
+                                                </div>
+                                                <div class="col-span-12  md:col-span-7 lg:col-span-7 2xl:col-span-2">
+                                                    <label class="inline-block mb-2 text-base font-medium">Last Name <span
+                                                            class="text-red-500">*</span></label>
+                                                    <input type="text" id="di_last_name" name="di_last_name"
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                        required>
+                                                </div>
+                                            </div>
+                                            <label class="inline-block mb-2 text-base font-medium">Delivery Address <span
+                                                    class="text-red-500">*</span></label>
+                                            <input type="text" id="delivery_address" name="delivery_address"
+                                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                required>
+                                            <br>
+                                            <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5 mb-3">
+                                                <div class="col-span-12  md:col-span-5 lg:col-span-5 2xl:col-span-2">
+                                                    <label class="inline-block mb-2 text-base font-medium">Postal Code
+                                                        <span class="text-red-500">*</span></label>
+                                                    <input type="text" id="delivery_point" name="delivery_point"
+                                                        onkeypress="calculate();"
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                        required>
+                                                </div>
+                                                <div class="col-span-12  md:col-span-7 lg:col-span-7 2xl:col-span-2">
+                                                    <label class="inline-block mb-2 text-base font-medium">Contact Number
+                                                        <span class="text-red-500">*</span></label>
+                                                    <input type="text" id="delivery_contact" name="delivery_contact"
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                        required>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <label class="inline-block mb-2 text-base font-medium">Delivery Description
+                                                <span class="text-red-500">*</span></label>
+                                            <textarea id="delivery_instructions" name="delivery_instructions"
+                                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                required>
                                     </textarea>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <p class="text-center" style="color: red" id="chargec" name="chargec"></p>
-                            <button type="button" id="calbtn" name="calbtn" style="display: block"
-                                class="float-right text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 add-btn"
-                                onclick="calculate();"> <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                Calculate Charge</button>
+                                <p class="text-center" style="color: red" id="chargec" name="chargec"></p>
+                                <button type="button" id="calbtn" name="calbtn" style="display: block"
+                                    class="float-right text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 add-btn"
+                                    onclick="calculate();"> <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                    Calculate Charge</button>
 
-                            <button type="submit" style="display: none" id="porderbtn" name="porderbtn"
-                                class="float-right text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 add-btn">
-                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                                Place Order</button>
-                            <br>
+                                <button type="submit" style="display: none" id="porderbtn" name="porderbtn"
+                                    class="float-right text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 add-btn">
+                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                    Place Order</button>
+                                <br>
 
-                            {{-- <div class="col-span-12  md:col-span-6 lg:col-span-6 2xl:col-span-2">
+                                {{-- <div class="col-span-12  md:col-span-6 lg:col-span-6 2xl:col-span-2">
                                 <label class="inline-block mb-2 text-base font-medium">Payment Collection From <span
                                         class="text-red-500">*</span></label>
                                 <select type="text"
@@ -428,11 +504,11 @@
 
                             </div> --}}
 
+                            </div>
+
+
                         </div>
-
-
                     </div>
-                </div>
                 </form>
                 {{-- Form data ends here --}}
 
@@ -486,15 +562,13 @@
                                 document.getElementById('chargec').innerHTML = 'No data found';
                             });
                     }
-
-                    
                 </script>
                 <script>
                     function toggleButtons() {
                         document.getElementById('porderbtn').style.display = 'none';
                         document.getElementById('calbtn').style.display = 'block';
                     }
-                    </script>
+                </script>
 
 
 

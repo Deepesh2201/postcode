@@ -8,7 +8,7 @@
 
                 <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                     <div class="grow">
-                        <h5 class="text-16">Users</h5>
+                        <h5 class="text-16">User's Address</h5>
                     </div>
 
                 </div>
@@ -211,35 +211,28 @@
                                             data-sort="country_name">Register Date</th>
                                         <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
                                             data-sort="status">Status</th>
-                                            <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
-                                            data-sort="status">Address</th>
                                         <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
                                             data-sort="action">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody class="list form-check-all">
-                                    @foreach ($items as $item)
+                                    @foreach ($addresses as $address)
                                         <tr>
 
                                             <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 id"
                                                 style="display:none;"><a href="javascript:void(0);"
-                                                    class="fw-medium link-primary id">{{ $item->id }}</a></td>
+                                                    class="fw-medium link-primary id">{{ $address->id }}</a></td>
                                             <td
                                                 class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
                                                 {{ $loop->iteration }}</td>
                                             <td
                                                 class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
-                                                {{ $item->name }}</td>
+                                                {{ $address->name }}</td>
+                                            
                                             <td
                                                 class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
-                                                {{ $item->contact_number }}</td>
-                                            <td
-                                                class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
-                                                {{ $item->email }}</td>
-                                            <td
-                                                class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
-                                                {{ $item->created_at }}</td>
-                                            @if ($item->status == 1)
+                                                {{ $address->created_at }}</td>
+                                            @if ($address->is_active == 1)
                                                 <td
                                                     class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 status">
                                                     <span
@@ -253,25 +246,14 @@
                                                 </td>
                                             @endif
 
-                                            <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                <div class="flex gap-2">
 
-                                                    <div class="edit">
-                                                       <a href="address/{{$item->id}}"> <button
-                                                            class="py-1 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 edit-item-btn"><i
-                                                                class="fa fa-eye" aria-hidden="true"></i>
-                                                        </button></a>
-                                                    </div>
-
-                                                </div>
-                                            </td>
 
                                             <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                                                 <div class="flex gap-2">
 
                                                     <div class="edit">
                                                         <button data-modal-target="showModal"
-                                                            onclick="editrecord('{{ $item->id }}')"
+                                                            onclick="editrecord('{{ $address->id }}')"
                                                             class="py-1 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 edit-item-btn"><i
                                                                 class="fa fa-pencil" aria-hidden="true"></i>
                                                         </button>
@@ -317,7 +299,7 @@
             class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show">
             <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600">
                 <div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-zink-500">
-                    <h5 class="text-16" id="exampleModalLabel">Add User</h5>
+                    <h5 class="text-16" id="exampleModalLabel">Add Address</h5>
                     <button data-modal-close="showModal"
                         class="transition-all duration-200 ease-linear text-slate-400 hover:text-slate-500"><i
                             data-lucide="x" class="size-5"></i></button>
