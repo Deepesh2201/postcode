@@ -113,6 +113,11 @@ Route::prefix('admin/')->group(function () {
     Route::post('delivery-man-document-action', [App\Http\Controllers\DeliveryManDocumentController::class, 'action']);
     Route::get('users', [API\UserController::class, 'userListWeb']);
     Route::get('address/{id}', [API\UserController::class, 'userAddressWeb']);
+    Route::post('adduseraddress', [API\UserController::class, 'userAddressSave']);
+    Route::get('getuseraddress/{id}', [API\UserController::class, 'getuseraddress']);
+    Route::get('deleteUserAddress/{id}', [API\UserController::class, 'deleteUserAddress']);
+    Route::post('fetchaddress', [API\UserController::class, 'fetchaddress']);
+    Route::post('getaddressdata', [API\UserController::class, 'getaddressdata']);
     Route::get('drivers', [API\UserController::class, 'userListWebDrivers']);
     Route::get('logout', [API\UserController::class, 'logoutweb']);
 
@@ -205,5 +210,5 @@ Route::post('vehicle-action', [App\Http\Controllers\VehicleController::class, 'a
 
 Route::post('save-setting', [API\CommonController::class, 'saveSetting']);
 Route::get('get-setting', [API\CommonController::class, 'getSetting']);
-    
+
 // });

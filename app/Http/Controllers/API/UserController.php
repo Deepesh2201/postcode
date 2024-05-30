@@ -615,18 +615,18 @@ class UserController extends Controller
 
     public function registerWeb(UserRequest $request)
     {
-        
+
         $input = $request->all();
 
         // Check if the request contains an ID
-        
+
         if ($request->filled('id')) {
             // Update existing user
             $user = User::findOrFail($request->id);
             $user->update($input);
             $message = __('message.update_form', ['form' => __('message.' . $input['user_type'])]);
         } else {
-            
+
             // Create new user
             $input['username'] = $input['contact_number'];
             $password = $input['password'];
@@ -659,17 +659,17 @@ class UserController extends Controller
     }
     public function registerDriverWeb(Request $request)
     {
-        
+
         $input = $request->all();
 
         // Check if the request contains an ID
-       
+
         if ($request->filled('id')) {
             // Update existing user
             $user = User::findOrFail($request->id);
             $user->update($input);
         } else {
-            
+
             // Create new user
             $input['username'] = $input['contact_number'];
             $password = $input['password'];
@@ -884,10 +884,79 @@ class UserController extends Controller
         return view('admin.users', compact('items'));
     }
     public function userAddressWeb($id){
+        $user_id = $id;
         $addresses = UserAddress::select('*')->where('user_id',$id)->get();
-        return view('admin.address',compact('addresses'));
+        return view('admin.address',compact('addresses','user_id'));
 
     }
+    public function deleteUserAddress($id){
+        $userAddress = UserAddress::find($id);
+
+    if ($userAddress) {
+        $userAddress->delete();
+    }
+        return redirect()->to(url('admin/users'));
+    }
+    public function userAddressSave(Request $request){
+
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'complete_address' => 'required',
+            'postal_code' => 'required',
+            'contact_number' => 'required',
+        ], [
+            'first_name.required' => 'The first name is required.',
+            'last_name.required' => 'The last name is required.',
+            'complete_address.required' => 'The complete address is required.',
+            'postal_code.required' => 'The postal code is required.',
+            'contact_number.required' => 'The contact number is required.',
+        ]);
+        if ($request->id) {
+            $data = UserAddress::find($request->id);
+        } else {
+            $data = new UserAddress();
+        }
+
+
+
+        $data->user_id = $request->user_id;
+        $data->first_name = $request->first_name;
+        $data->last_name = $request->last_name;
+        $data->name = $request->complete_address;
+        $data->postal_code = $request->postal_code;
+        $data->contact_number = $request->contact_number;
+
+        $data->save();
+
+        return redirect()->to(url('admin/address/' . $data->user_id));
+
+    }
+    public function getuseraddress(Request $request){
+        $id = $request->id;
+
+        $address = UserAddress::where('id', $id)->first();
+
+        // $response = [
+        //     'data' => $address
+        // ];
+        return json_custom_response($address);
+    }
+    public function getaddressdata(Request $request){
+        $id = $request->id;
+        $address = UserAddress::where('id',$id)->first();
+
+        return json_custom_response($address);
+    }
+    public function fetchaddress(Request $request){
+        $id = $request->id;
+        $address = UserAddress::where('user_id', $id)->get();
+        $response = [
+            'data' => $address
+        ];
+        return json_custom_response($response);
+    }
+
     public function userListWebDrivers(Request $request)
     {
 

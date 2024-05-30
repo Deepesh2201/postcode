@@ -191,7 +191,7 @@
                 {{-- Form Data Starts Here --}}
                 <form class="tablelist-form" action="{{ url('admin/saveOrderWeb') }}" method="POST">
                     @csrf
-                    {{-- <div class="grid grid-cols-12 gap-x-5" id="schedule" style="display: none;">
+                    <div class="grid grid-cols-12 gap-x-5" id="schedule" style="display: none;">
 
                     <div class="order-12 col-span-12 lg:col-span-6 2xl:order-1 card 2xl:col-span-3">
                         <div class="card-body">
@@ -255,7 +255,7 @@
 
                         </div>
                     </div>
-                </div> --}}
+                </div>
 
 
 
@@ -283,7 +283,8 @@
                                         @if (session('user')['user_type'] == 'admin')
                                             <select type="text" id="client_id" name="client_id"
                                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                required>
+                                                required onchange="fetchaddress()">
+                                                <option value="">Select User</option>
                                                 @foreach ($customers as $customer)
                                                     <option value="{{ $customer->id }}">
                                                         {{ $customer->name }}({{ $customer->contact_number }})</option>
@@ -304,9 +305,10 @@
                                         <select type="text" id="parcel_type" name="parcel_type"
                                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                             required>
-                                            {{-- @foreach ($designations as $designation)
-                                            <option value="{{ $designation->id }}">{{ $designation->name }}</option>
-                                        @endforeach --}}
+                                            <option value="">Select Designation</option>
+                                            @foreach ($designations as $designation)
+                                                <option value="{{ $designation->id }}">{{ $designation->name }}</option>
+                                            @endforeach
                                         </select>
 
                                     </div>
@@ -351,18 +353,18 @@
                                             <hr><br>
                                             <input type="hidden" value="1" id="status" name="status">
                                             <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5 mb-3">
-                                                <div class="col-span-12  md:col-span-12 lg:col-span-12 2xl:col-span-2">
-                                                    <label class="inline-block mb-2 text-base font-medium">Select Address</label>
+                                                <div class="col-span-12 md:col-span-12 lg:col-span-12 2xl:col-span-2">
+                                                    <label class="inline-block mb-2 text-base font-medium">Select
+                                                        Address</label>
                                                     <select type="text" id="pi_address" name="pi_address"
-                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                        >
+                                                        onchange="populateaddress()"
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                                                         <option>New Address</option>
-                                                        {{-- @foreach ($address as $address)
-                                                            <option value="{{$address->id}}">{{$address->name}}</option>
-                                                        @endforeach --}}
+                                                        {{-- Options will be populated by JavaScript --}}
                                                     </select>
                                                 </div>
                                             </div>
+
                                             <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5 mb-3">
                                                 <div class="col-span-12  md:col-span-5 lg:col-span-5 2xl:col-span-2">
                                                     <label class="inline-block mb-2 text-base font-medium">First Name <span
@@ -419,10 +421,10 @@
                                             <input type="hidden" value="1" id="status" name="status">
                                             <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5 mb-3">
                                                 <div class="col-span-12  md:col-span-12 lg:col-span-12 2xl:col-span-2">
-                                                    <label class="inline-block mb-2 text-base font-medium">Select Address</label>
-                                                    <select type="text" id="pi_address" name="pi_address"
-                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                        >
+                                                    <label class="inline-block mb-2 text-base font-medium">Select
+                                                        Address</label>
+                                                    <select type="text" id="di_address" name="di_address" onchange="populateaddressdi()"
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                                                         <option>New Address</option>
                                                         {{-- @foreach ($address as $address)
                                                             <option value="{{$address->id}}">{{$address->name}}</option>
@@ -570,7 +572,130 @@
                     }
                 </script>
 
+                <script>
+                    function fetchaddress() {
+                        var data = {
+                            id: document.getElementById('client_id').value,
+                        };
+                        var csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
+                        fetch('/admin/fetchaddress', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': csrfToken
+                                },
+                                body: JSON.stringify(data)
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                console.log(data);
+                                var select = document.getElementById('pi_address');
+                                var select2 = document.getElementById('di_address');
+                                select.innerHTML = '<option value="">New Address</option>'; // Reset dropdown and add default option
+                                select2.innerHTML =
+                                '<option value="">New Address</option>'; // Reset dropdown and add default option
+
+                                // Correctly access the data array
+                                data.data.forEach(function(address) {
+                                    var option = document.createElement('option');
+                                    option.value = address.id;
+                                    option.textContent = address.name; // Assuming the address has a name field
+                                    select.appendChild(option);
+                                });
+                                data.data.forEach(function(address) {
+                                    var option = document.createElement('option');
+                                    option.value = address.id;
+                                    option.textContent = address.name; // Assuming the address has a name field
+                                    select2.appendChild(option);
+                                });
+                            })
+                            .catch(error => {
+                                console.error('There wasan error!', error);
+                                document.getElementById('chargec').innerHTML = 'No data found';
+                            });
+                    }
+                </script>
+                <script>
+                    function populateaddress() {
+                        var data = {
+                            id: document.getElementById('pi_address').value,
+                        };
+                        var csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+                        fetch('/admin/getaddressdata', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': csrfToken
+                                },
+                                body: JSON.stringify(data)
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                console.log(data);
+                                document.getElementById('pi_first_name').value = data.first_name;
+                                document.getElementById('pi_last_name').value = data.last_name;
+                                document.getElementById('pickup_address').value = data.name;
+                                document.getElementById('pickup_point').value = data.postal_code;
+                                document.getElementById('pickup_contact').value = data.contact_number;
+                            })
+                            .catch(error => {
+                                console.error('There wasan error!', error);
+                                document.getElementById('chargec').innerHTML = 'No data found';
+                            });
+                    }
+                </script>
+                <script>
+                    function populateaddressdi() {
+                        var data = {
+                            id: document.getElementById('di_address').value,
+                        };
+                        var csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+                        fetch('/admin/getaddressdata', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': csrfToken
+                                },
+                                body: JSON.stringify(data)
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                console.log(data);
+                                document.getElementById('di_first_name').value = data.first_name;
+                                document.getElementById('di_last_name').value = data.last_name;
+                                document.getElementById('delivery_address').value = data.name;
+                                document.getElementById('delivery_point').value = data.postal_code;
+                                document.getElementById('delivery_contact').value = data.contact_number;
+                            })
+                            .catch(error => {
+                                console.error('There wasan error!', error);
+                                document.getElementById('chargec').innerHTML = 'No data found';
+                            });
+                    }
+                </script>
+                <script>
+                    function schedule(){
+                        document.getElementById('schedule').style.display = 'block';
+                    }
+                </script>
 
 
             </div>

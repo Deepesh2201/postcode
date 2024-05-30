@@ -13,6 +13,7 @@ use App\Models\Payment;
 use App\Http\Resources\API\PaymentResource;
 use App\Models\parcelSizeModal;
 use App\Models\Postalcodes;
+use App\Models\UserDesignation;
 use App\Models\StaticData;
 use App\Models\User;
 use App\Models\Wallet;
@@ -320,7 +321,8 @@ class OrderController extends Controller
     {
         $parceltypes = StaticData::select('*')->get();
         $customers = User::select('*')->where('user_type', 'client')->where('status', 1)->get();
-        return view('admin.createorder', compact('parceltypes', 'customers'));
+        $designations = UserDesignation::select('*')->get();
+        return view('admin.createorder', compact('parceltypes', 'customers','designations'));
     }
     public function saveOrderWeb(Request $request)
     {
