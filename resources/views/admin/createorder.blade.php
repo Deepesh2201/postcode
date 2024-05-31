@@ -300,7 +300,7 @@
                                             </select>
                                         @endif
                                     </div>
-                                    <div class="col-span-12  md:col-span-2 lg:col-span-2 2xl:col-span-2">
+                                    {{-- <div class="col-span-12  md:col-span-2 lg:col-span-2 2xl:col-span-2">
                                         <label class="inline-block mb-2 text-base font-medium">Designation</label>
                                         <select type="text" id="parcel_type" name="parcel_type"
                                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -311,7 +311,7 @@
                                             @endforeach
                                         </select>
 
-                                    </div>
+                                    </div> --}}
                                     <div class="col-span-12  md:col-span-2 lg:col-span-2 2xl:col-span-2">
                                         <label class="inline-block mb-2 text-base font-medium">Parcel Type <span
                                                 class="text-red-500">*</span></label>
@@ -364,7 +364,22 @@
                                                     </select>
                                                 </div>
                                             </div>
-
+                                            <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5 mb-3">
+                                                <div class="col-span-12  md:col-span-5 lg:col-span-5 2xl:col-span-2">
+                                                    <label class="inline-block mb-2 text-base font-medium">Company Name <span
+                                                            class="text-red-500">*</span></label>
+                                                    <input type="text" id="pi_company_name" name="pi_company_name"
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                        required>
+                                                </div>
+                                                <div class="col-span-12  md:col-span-7 lg:col-span-7 2xl:col-span-2">
+                                                    <label class="inline-block mb-2 text-base font-medium">Department <span
+                                                            class="text-red-500">*</span></label>
+                                                    <input type="text" id="pi_department" name="pi_department"
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                        required>
+                                                </div>
+                                            </div>
                                             <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5 mb-3">
                                                 <div class="col-span-12  md:col-span-5 lg:col-span-5 2xl:col-span-2">
                                                     <label class="inline-block mb-2 text-base font-medium">First Name <span
@@ -430,6 +445,22 @@
                                                             <option value="{{$address->id}}">{{$address->name}}</option>
                                                         @endforeach --}}
                                                     </select>
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5 mb-3">
+                                                <div class="col-span-12  md:col-span-5 lg:col-span-5 2xl:col-span-2">
+                                                    <label class="inline-block mb-2 text-base font-medium">Company Name <span
+                                                            class="text-red-500">*</span></label>
+                                                    <input type="text" id="pi_company_name" name="di_company_name"
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                        required>
+                                                </div>
+                                                <div class="col-span-12  md:col-span-7 lg:col-span-7 2xl:col-span-2">
+                                                    <label class="inline-block mb-2 text-base font-medium">Department <span
+                                                            class="text-red-500">*</span></label>
+                                                    <input type="text" id="pi_department" name="di_department"
+                                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                        required>
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5 mb-3">
