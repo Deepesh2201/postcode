@@ -191,71 +191,73 @@
                 {{-- Form Data Starts Here --}}
                 <form class="tablelist-form" action="{{ url('admin/saveOrderWeb') }}" method="POST">
                     @csrf
-                    <div class="grid grid-cols-12 gap-x-5" id="schedule" style="display: none;">
+                    {{-- <div class="grid grid-cols-12 gap-x-5" id="schedule" style="display: none;">
 
-                    <div class="order-12 col-span-12 lg:col-span-6 2xl:order-1 card 2xl:col-span-3">
-                        <div class="card-body">
-                            <h6 class="mb-3 text-15">Pickup Time</h6>
-                            <label class="inline-block mb-2 text-base font-medium">Date <span
-                                    class="text-red-500">*</span></label>
-                            <input type="date" id="pickuptime" name="pickuptime"
-                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                required>
+                        <div class="order-12 col-span-12 lg:col-span-6 2xl:order-1 card 2xl:col-span-3">
+                            <div class="card-body">
+                                <h6 class="mb-3 text-15">Pickup Time</h6>
+                                <label class="inline-block mb-2 text-base font-medium">Date <span
+                                        class="text-red-500">*</span></label>
+                                <input type="date" id="pickuptime" name="pickuptime"
+                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                    required>
 
-                            <br>
-                            <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
-                                <div class="xl:col-span-6">
-                                    <label for="phoneNumberInput"
-                                        class="inline-block mb-2 text-base font-medium">From</label>
-                                    <input type="time" id="phoneNumberInput"
-                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                        placeholder="Enter phone number" required>
+                                <br>
+                                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
+                                    <div class="xl:col-span-6">
+                                        <label for="phoneNumberInput"
+                                            class="inline-block mb-2 text-base font-medium">From</label>
+                                        <input type="time" id="phoneNumberInput"
+                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                            placeholder="Enter phone number" required>
+                                    </div>
+                                    <div class="xl:col-span-6">
+                                        <label for="locationInput"
+                                            class="inline-block mb-2 text-base font-medium">To</label>
+                                        <input type="time" id="locationInput"
+                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                            placeholder="Enter location" required>
+                                    </div>
                                 </div>
-                                <div class="xl:col-span-6">
-                                    <label for="locationInput" class="inline-block mb-2 text-base font-medium">To</label>
-                                    <input type="time" id="locationInput"
-                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                        placeholder="Enter location" required>
-                                </div>
+                                <br>
+
+
                             </div>
-                            <br>
-
-
                         </div>
-                    </div>
-                    <div class="col-span-12 lg:col-span-6 order-[13] 2xl:order-1 card 2xl:col-span-3">
-                        <div class="card-body">
-                            <h6 class="mb-3 text-15">Delivery Time</h6>
-                            <label class="inline-block mb-2 text-base font-medium">Date <span
-                                    class="text-red-500">*</span></label>
-                            <input type="date" id="deliverytime" name="deliverytime"
-                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                required>
+                        <div class="col-span-12 lg:col-span-6 order-[13] 2xl:order-1 card 2xl:col-span-3">
+                            <div class="card-body">
+                                <h6 class="mb-3 text-15">Delivery Time</h6>
+                                <label class="inline-block mb-2 text-base font-medium">Date <span
+                                        class="text-red-500">*</span></label>
+                                <input type="date" id="deliverytime" name="deliverytime"
+                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                    required>
 
-                            <br>
-                            <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
-                                <div class="xl:col-span-6">
-                                    <label for="phoneNumberInput"
-                                        class="inline-block mb-2 text-base font-medium">From</label>
-                                    <input type="time" id="phoneNumberInput"
-                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                        placeholder="Enter phone number" required>
+                                <br>
+                                <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
+                                    <div class="xl:col-span-6">
+                                        <label for="phoneNumberInput"
+                                            class="inline-block mb-2 text-base font-medium">From</label>
+                                        <input type="time" id="phoneNumberInput"
+                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                            placeholder="Enter phone number" required>
+                                    </div>
+                                    <div class="xl:col-span-6">
+                                        <label for="locationInput"
+                                            class="inline-block mb-2 text-base font-medium">To</label>
+                                        <input type="time" id="locationInput"
+                                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                            placeholder="Enter location" required>
+                                    </div>
                                 </div>
-                                <div class="xl:col-span-6">
-                                    <label for="locationInput" class="inline-block mb-2 text-base font-medium">To</label>
-                                    <input type="time" id="locationInput"
-                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                        placeholder="Enter location" required>
-                                </div>
+
+
+                                <br>
+
+
                             </div>
-
-
-                            <br>
-
-
                         </div>
-                    </div>
-                </div>
+                    </div> --}}
 
 
 
@@ -366,8 +368,8 @@
                                             </div>
                                             <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5 mb-3">
                                                 <div class="col-span-12  md:col-span-5 lg:col-span-5 2xl:col-span-2">
-                                                    <label class="inline-block mb-2 text-base font-medium">Company Name <span
-                                                            class="text-red-500">*</span></label>
+                                                    <label class="inline-block mb-2 text-base font-medium">Company Name
+                                                        <span class="text-red-500">*</span></label>
                                                     <input type="text" id="pi_company_name" name="pi_company_name"
                                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                                         required>
@@ -438,7 +440,8 @@
                                                 <div class="col-span-12  md:col-span-12 lg:col-span-12 2xl:col-span-2">
                                                     <label class="inline-block mb-2 text-base font-medium">Select
                                                         Address</label>
-                                                    <select type="text" id="di_address" name="di_address" onchange="populateaddressdi()"
+                                                    <select type="text" id="di_address" name="di_address"
+                                                        onchange="populateaddressdi()"
                                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
                                                         <option>New Address</option>
                                                         {{-- @foreach ($address as $address)
@@ -449,8 +452,8 @@
                                             </div>
                                             <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5 mb-3">
                                                 <div class="col-span-12  md:col-span-5 lg:col-span-5 2xl:col-span-2">
-                                                    <label class="inline-block mb-2 text-base font-medium">Company Name <span
-                                                            class="text-red-500">*</span></label>
+                                                    <label class="inline-block mb-2 text-base font-medium">Company Name
+                                                        <span class="text-red-500">*</span></label>
                                                     <input type="text" id="pi_company_name" name="di_company_name"
                                                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                                         required>
@@ -511,6 +514,7 @@
                                     </textarea>
                                         </div>
                                     </div>
+                                    <input type="hidden" id="distance_charge" name="distance_charge">
                                 </div>
                                 <p class="text-center" style="color: red" id="chargec" name="chargec"></p>
                                 <button type="button" id="calbtn" name="calbtn" style="display: block"
@@ -558,11 +562,11 @@
                         document.getElementById('porderbtn').style.display = 'none';
                         document.getElementById('calbtn').style.display = 'block';
                         if (document.getElementById('pickup_point').value == "") {
-                            alert('Please enter source postal code');
+                            document.getElementById('distance_charge').value = 0;
                             return false;
                         }
                         if (document.getElementById('delivery_point').value == "") {
-                            alert('Please enter destination postal code');
+                            document.getElementById('distance_charge').value = 0;
                             return false;
                         }
                         var data = {
@@ -587,12 +591,14 @@
                             })
                             .then(data => {
                                 document.getElementById('chargec').innerHTML = 'Your estimated charge will be :' + data;
+                                document.getElementById('distance_charge').value = data;
                                 document.getElementById('porderbtn').style.display = 'block';
                                 document.getElementById('calbtn').style.display = 'none';
                             })
                             .catch(error => {
                                 console.error('There wasan error!', error);
                                 document.getElementById('chargec').innerHTML = 'No data found';
+                                document.getElementById('distance_charge').value = 0;
                             });
                     }
                 </script>
@@ -630,7 +636,7 @@
                                 var select2 = document.getElementById('di_address');
                                 select.innerHTML = '<option value="">New Address</option>'; // Reset dropdown and add default option
                                 select2.innerHTML =
-                                '<option value="">New Address</option>'; // Reset dropdown and add default option
+                                    '<option value="">New Address</option>'; // Reset dropdown and add default option
 
                                 // Correctly access the data array
                                 data.data.forEach(function(address) {
@@ -723,7 +729,7 @@
                     }
                 </script>
                 <script>
-                    function schedule(){
+                    function schedule() {
                         document.getElementById('schedule').style.display = 'block';
                     }
                 </script>

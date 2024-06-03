@@ -319,6 +319,7 @@ class OrderController extends Controller
     }
     public function createOrderWeb()
     {
+
         $parceltypes = StaticData::select('*')->get();
         $customers = User::select('*')->where('user_type', 'client')->where('status', 1)->get();
         $designations = UserDesignation::select('*')->get();
@@ -326,11 +327,38 @@ class OrderController extends Controller
     }
     public function saveOrderWeb(Request $request)
     {
+
         $requestData = $request->all();
         // dd($requestData);
         $order = new Order();
-        $order->fill($requestData);
+        // $order->fill($requestData);
+        $order->client_id = $request->client_id;
+        $order->pi_company_name = $request->pi_company_name;
+        $order->pi_department_name = $request->pi_department;
+        $order->pi_first_name = $request->pi_first_name;
+        $order->pi_last_name = $request->pi_last_name;
+        $order->pickup_point = $request->pickup_point;
+        $order->pickup_address = $request->pickup_address;
+        $order->pickup_contact = $request->pickup_contact;
+        $order->pickup_instructions = $request->pickup_instructions;
+        $order->di_company_name = $request->di_company_name;
+        $order->di_department_name = $request->di_department;
+        $order->di_first_name = $request->di_first_name;
+        $order->di_last_name = $request->di_last_name;
+        $order->delivery_point = $request->delivery_point;
+        $order->delivery_address = $request->delivery_address;
+        $order->delivery_contact = $request->delivery_contact;
+        $order->delivery_instructions = $request->delivery_instructions;
+        $order->parcel_type = $request->parcel_type;
+        $order->total_weight = $request->total_weight;
+        $order->total_parcel = $request->total_parcel;
+        $order->distance_charge = $request->distance_charge; // Total shipment cost based on distance
+        $order->total_amount = $request->distance_charge; //Total Cost of delivery including all
+        $order->total_parcel = $request->total_parcel;
+        $order->oder_type = 0;
+        $order->status = 1;
         $order->save();
+
         if ($order) {
             return redirect()->to(url('admin/orders'));
         } else {
