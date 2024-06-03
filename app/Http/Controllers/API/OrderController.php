@@ -368,7 +368,8 @@ class OrderController extends Controller
 
     public function viewOrderWeb($id)
     {
-        $orderData = Order::select('*')->where('id', $id)->first();
+        $orderData = Order::select('orders.*','static_data.label as parcel_label')
+        ->leftJoin('static_data','static_data.id','orders.parcel_type')->where('orders.id', $id)->first();
 
         $parceltypes = StaticData::select('*')->get();
         $customers = User::select('*')->where('user_type', 'client')->where('status', 1)->get();
