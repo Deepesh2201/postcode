@@ -8,7 +8,7 @@
 
                 <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
                     <div class="grow">
-                        <h5 class="text-16">Users</h5>
+                        <h5 class="text-16">Payment List</h5>
                     </div>
 
                 </div>
@@ -178,21 +178,109 @@
                     <div class="card-body">
                         <div class="grid grid-cols-1 gap-5 mb-5 xl:grid-cols-2">
                             <div>
-                                <div class="relative xl:w-3/6">
-                                    <input type="text"
-                                        class="ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                        placeholder="Search for ..." autocomplete="off">
-                                    <i data-lucide="search"
-                                        class="inline-block size-4 absolute ltr:left-2.5 rtl:right-2.5 top-2.5 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-600"></i>
+                                <div class="relative " style="display: flex; justify-content:space-between">
+                                    <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2 cards-yellow">
+                                        <div class="text-center p-3">
+                                            
+                                            <h5 class=" mb-1">£<span class="counter-value" data-target="{{$orderAmount}}"></span></h5>
+                                            <p class="text-slate-500 dark:text-zink-200 mb-2">Total Order Amount</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2 cards-green">
+                                        <div class="text-center p-3">
+                                            
+                                            <h5 class=" mb-1">£<span class="counter-value" data-target="{{$paidAmount}}"></span></h5>
+                                            <p class="text-slate-500 dark:text-zink-200 mb-2">Total Paid Amount</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2 cards-purple">
+                                        <div class="text-center p-3">
+                                            
+                                            <h5 class=" mb-1">£<span class="counter-value" data-target="{{$orderAmount - $paidAmount}}"></span></h5>
+                                            <p class="text-slate-500 dark:text-zink-200 mb-2">Total Due Amount</p>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                             </div>
                             <div class="ltr:md:text-end rtl:md:text-start">
                                 <button type="button" data-modal-target="showModal" onclick="newrecord()"
                                     class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 add-btn"
                                     data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"><i
-                                        class="align-bottom ri-add-line me-1"></i> Add User</button>
+                                        class="align-bottom ri-add-line me-1"></i> Add Payment</button>
                             </div>
                         </div>
+                        <form action="{{url('/admin/paymentsearch')}}" method="POST">
+                        @csrf
+                        <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5 mb-3">
+                            <div class="col-span-12  md:col-span-2 lg:col-span-2 2xl:col-span-2">
+                                <label class="inline-block mb-2 text-base font-medium">Customer <span
+                                        class="text-red-500">*</span></label>
+                                @if (session('user')['user_type'] == 'admin')
+                                    <select type="text" id="client_id" name="client_id"
+                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                        >
+                                        <option value="">Select User</option>
+                                        @foreach ($customers as $customer)
+                                            <option value="{{ $customer->id }}">
+                                                {{ $customer->name }}({{ $customer->contact_number }})</option>
+                                        @endforeach
+                                    </select>
+                                @else
+                                    <select type="text" id="client_id" name="client_id"
+                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                        >
+                                        <option value="{{ session('user')['id'] }}">{{ session('user')['name'] }}
+                                        </option>
+
+                                    </select>
+                                @endif
+                            </div>
+                            <div class="col-span-12  md:col-span-2 lg:col-span-2 2xl:col-span-2">
+                                <label class="inline-block mb-2 text-base font-medium">Payment Type <span
+                                        class="text-red-500">*</span></label>
+                                <select type="text" id="payment_method" name="payment_method"
+                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                    >
+                                    <option value="">Select Payment Method</option>
+                                    @foreach ($paymentmethods as $paymentmethod)
+                                        <option value="{{ $paymentmethod->id }}">
+                                            {{ $paymentmethod->title }}</option>
+                                    @endforeach
+                                </select>
+
+                            </div>
+
+                            <div class="col-span-12  md:col-span-2 lg:col-span-2 2xl:col-span-2">
+                                <label class="inline-block mb-2 text-base font-medium">Txn No. <span
+                                        class="text-red-500">*</span></label>
+                                <input type="text" id="txn_no" name="txn_no"
+                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                    >
+
+                            </div>
+
+                            <div class="col-span-12 mt-2 md:col-span-2 lg:col-span-2 2xl:col-span-2">
+                                <label class="inline-block mb-2 text-base font-medium">From Date
+                                    <input type="date" id="from_date" name="from_date"
+                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+
+                            </div>
+                            <div class="col-span-12 mt-2 md:col-span-2 lg:col-span-2 2xl:col-span-2">
+                                <label class="inline-block mb-2 text-base font-medium">To Date
+                                    <input type="date" id="to_date" name="to_date"
+                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+
+                            </div>
+                            <div class="col-span-12 mt-7 md:col-span-2 lg:col-span-2 2xl:col-span-2">
+                                <button type="submit"
+                                    class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 add-btn"
+                                    > Search</button>
+                            </div>
+
+                        </div>
+                    </form>
+                        <hr>
 
                         <div class="overflow-x-auto">
                             <table class="w-full whitespace-nowrap" id="customerTable">
@@ -202,98 +290,90 @@
                                         <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
                                             data-sort="id">Id</th>
                                         <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
-                                            data-sort="country_name">Name</th>
+                                            data-sort="country_name">Customer Name</th>
                                         <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
-                                            data-sort="country_name">Contact Number</th>
+                                            data-sort="country_name">Amount(£)</th>
                                         <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
-                                            data-sort="country_name">Email Id</th>
+                                            data-sort="country_name">Txn No.</th>
                                         <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
-                                            data-sort="country_name">Total Invoice Amt</th>
+                                            data-sort="country_name">Payment Method</th>
                                         <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
-                                            data-sort="country_name">Total Paid Amt</th>
-                                        <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
-                                            data-sort="country_name">Total Due Amt</th>
-                                        <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
-                                            data-sort="country_name">Register Date</th>
+                                            data-sort="country_name">Remarks</th>
                                         <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
                                             data-sort="status">Status</th>
-                                        <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
-                                            data-sort="status">Address</th>
-                                        <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
-                                            data-sort="action">Action</th>
+                                        {{-- <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
+                                            data-sort="action">Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody class="list form-check-all">
-                                    @foreach ($items as $item)
+                                    @foreach ($payments as $payment)
                                         <tr>
 
                                             <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 id"
                                                 style="display:none;"><a href="javascript:void(0);"
-                                                    class="fw-medium link-primary id">{{ $item->id }}</a></td>
+                                                    class="fw-medium link-primary id">{{ $payment->id }}</a></td>
                                             <td
                                                 class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
                                                 {{ $loop->iteration }}</td>
                                             <td
                                                 class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
-                                                {{ $item->name }}</td>
+                                                {{ $payment->customer_name }}</td>
+
                                             <td
                                                 class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
-                                                {{ $item->contact_number }}</td>
+                                                {{ $payment->total_amount }}</td>
                                             <td
                                                 class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
-                                                {{ $item->email }}</td>
-                                                <td
-                                                class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
-                                                {{ $item->totalInvoiceAmt }}</td>
-                                                <td
-                                                class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
-                                                {{ $item->totalPaidAmt }}</td>
-                                                <td
-                                                class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
-                                                {{ $item->totalInvoiceAmt - $item->totalPaidAmt }}</td>
+                                                {{ $payment->txn_id }}</td>
                                             <td
                                                 class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
-                                                {{ $item->created_at }}</td>
-                                            @if ($item->status == 1)
+                                                {{ $payment->payment_method }}</td>
+                                            <td
+                                                class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name">
+                                                {{ $payment->transaction_detail }}</td>
+                                            @if ($payment->payment_status == 'paid')
                                                 <td
                                                     class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 status">
                                                     <span
-                                                        class="px-2.5 py-0.5 inline-block text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent text-uppercase">Active</span>
+                                                        class="px-2.5 py-0.5 inline-block text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent text-uppercase">Paid</span>
                                                 </td>
-                                            @else
+                                            @endif
+                                            @if ($payment->payment_status == 'pending')
                                                 <td
                                                     class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 status">
                                                     <span
-                                                        class="px-2.5 py-0.5 inline-block text-xs font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent text-uppercase">Inactive</span>
+                                                        class="px-2.5 py-0.5 inline-block text-xs font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent text-uppercase">Pending</span>
+                                                </td>
+                                            @endif
+                                            @if ($payment->payment_status == 'failed')
+                                                <td
+                                                    class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 status">
+                                                    <span
+                                                        class="px-2.5 py-0.5 inline-block text-xs font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent text-uppercase">Failed</span>
                                                 </td>
                                             @endif
 
-                                            <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
-                                                <div class="flex gap-2">
 
-                                                    <div class="edit">
-                                                        <a href="address/{{ $item->id }}"> <button
-                                                                class="py-1 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 edit-item-btn"><i
-                                                                    class="fa fa-eye" aria-hidden="true"></i>
-                                                            </button></a>
-                                                    </div>
-
-                                                </div>
-                                            </td>
-
+{{-- 
                                             <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
                                                 <div class="flex gap-2">
 
                                                     <div class="edit">
                                                         <button data-modal-target="showModal"
-                                                            onclick="editrecord('{{ $item->id }}')"
+                                                            onclick="editrecord('{{ $payment->id }}')"
                                                             class="py-1 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 edit-item-btn"><i
                                                                 class="fa fa-pencil" aria-hidden="true"></i>
                                                         </button>
                                                     </div>
+                                                    <div class="edit">
+                                                       <a href="/admin/deleteUserAddress/{{$payment->id}}"> <button
+                                                            class="py-1 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 edit-item-btn"><i
+                                                                class="fa fa-trash" aria-hidden="true"></i>
+                                                        </button></a>
+                                                    </div>
 
                                                 </div>
-                                            </td>
+                                            </td> --}}
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -332,68 +412,112 @@
             class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show">
             <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600">
                 <div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-zink-500">
-                    <h5 class="text-16" id="exampleModalLabel">Add User</h5>
+                    <h5 class="text-16" id="exampleModalLabel">Add Payment</h5>
                     <button data-modal-close="showModal"
-                        class="transition-all duration-200 ease-linear text-slate-400 hover:text-slate-500"><i
-                            data-lucide="x" class="size-5"></i></button>
+                        class="transition-all duration-200 ease-linear text-slate-400 hover:text-slate-500">
+                        <i data-lucide="x" class="size-5"></i>
+                    </button>
                 </div>
                 <div class="max-h-[calc(theme('height.screen')_-_180px)] overflow-y-auto p-4">
-                    <form class="tablelist-form" action="{{ url('admin/registerWeb') }}" method="POST">
+                    <form class="tablelist-form" action="{{ url('admin/makepayment') }}" method="POST">
                         @csrf
                         <div class="mb-3" id="modal-id" style="display: none;">
+
                             <label for="id-field" class="inline-block mb-2 text-base font-medium">ID</label>
                             <input type="text" id="id" name="id"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                placeholder="ID" readonly="">
+                                placeholder="ID" readonly>
                         </div>
-
+                        {{-- <input type="hidden" id="user_id" name="user_id" value="{{$user_id}}"> --}}
                         <div class="mb-3">
-                            <label class="inline-block mb-2 text-base font-medium">Email Id <span
+                            <label class="inline-block mb-2 text-base font-medium">Customer <span
                                     class="text-red-500">*</span></label>
-                            <input type="email" id="email" name="email"
-                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                required>
-
+                                    <select type="text" id="client_id" name="client_id"
+                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                    required onchange="fetchaddress()">
+                                    <option value="">Select Client</option>
+                                    @foreach ($customers as $customer)
+                                        <option value="{{ $customer->id }}">
+                                            {{ $customer->name }}({{ $customer->contact_number }})</option>
+                                    @endforeach
+                                </select>
+                            @if ($errors->has('client_id'))
+                                <div class="text-red-500 mt-2 text-sm">
+                                    {{ $errors->first('client_id') }}
+                                </div>
+                            @endif
                         </div>
+
                         <div class="mb-3">
-                            <label class="inline-block mb-2 text-base font-medium">Username <span
+                            <label class="inline-block mb-2 text-base font-medium">Amount <span
                                     class="text-red-500">*</span></label>
-                            <input type="text" id="username" name="username"
+                            <input type="text" id="amount" name="amount"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 required>
-
+                            @if ($errors->has('amount'))
+                                <div class="text-red-500 mt-2 text-sm">
+                                    {{ $errors->first('amount') }}
+                                </div>
+                            @endif
                         </div>
 
                         <div class="mb-3">
-                            <label class="inline-block mb-2 text-base font-medium">Name <span
+                            <label class="inline-block mb-2 text-base font-medium">Payment Mode <span
                                     class="text-red-500">*</span></label>
-                            <input type="text" id="name" name="name"
-                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                required>
-
+                                    <select type="text" id="payment_method" name="payment_method"
+                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                    required onchange="fetchaddress()">
+                                    <option value="">Select Payment Method</option>
+                                    @foreach ($paymentmethods as $paymentmethod)
+                                        <option value="{{ $paymentmethod->id }}">
+                                            {{ $paymentmethod->title }}</option>
+                                    @endforeach
+                                </select>
+                            @if ($errors->has('payment_method'))
+                                <div class="text-red-500 mt-2 text-sm">
+                                    {{ $errors->first('payment_method') }}
+                                </div>
+                            @endif
                         </div>
+
                         <div class="mb-3">
-                            <label class="inline-block mb-2 text-base font-medium">Contact Number <span
+                            <label class="inline-block mb-2 text-base font-medium">Txn No. <span
                                     class="text-red-500">*</span></label>
-                            <input type="text" id="contact_number" name="contact_number"
+                            <input type="text" id="txn_no" name="txn_no"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 required>
-
+                            @if ($errors->has('txn_no'))
+                                <div class="text-red-500 mt-2 text-sm">
+                                    {{ $errors->first('txn_no') }}
+                                </div>
+                            @endif
                         </div>
+
                         <div class="mb-3">
-                            <label class="inline-block mb-2 text-base font-medium">Password <span
+                            <label class="inline-block mb-2 text-base font-medium">Payment Date <span
                                     class="text-red-500">*</span></label>
-                            <input type="password" id="password" name="password"
+                            <input type="datetime-local" id="payment_date" name="payment_date"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 required>
-
+                            @if ($errors->has('payment_date'))
+                                <div class="text-red-500 mt-2 text-sm">
+                                    {{ $errors->first('payment_date') }}
+                                </div>
+                            @endif
                         </div>
                         <div class="mb-3">
-                            <input type="hidden" id="user_type" name="user_type" value="client"
+                            <label class="inline-block mb-2 text-base font-medium">Remarks <span
+                                    class="text-red-500">*</span></label>
+                            <input type="text" id="remarks" name="remarks"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 required>
-
+                            @if ($errors->has('remarks'))
+                                <div class="text-red-500 mt-2 text-sm">
+                                    {{ $errors->first('remarks') }}
+                                </div>
+                            @endif
                         </div>
+
                         <div class="flex justify-end gap-2">
                             <button type="button" data-modal-close="showModal"
                                 class="text-white btn bg-slate-500 border-slate-500 hover:text-white hover:bg-slate-600 hover:border-slate-600 focus:text-white focus:bg-slate-600 focus:border-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:border-slate-600 active:ring active:ring-slate-100 dark:ring-slate-400/10"
@@ -408,35 +532,36 @@
         </div>
 
 
+
         <script>
             function newrecord() {
-                document.getElementById('exampleModalLabel').innerHTML = 'Add New User';
+                document.getElementById('exampleModalLabel').innerHTML = 'Add New Payment';
                 document.getElementById('add-btn').innerHTML = 'Add';
                 document.getElementById('id').value = '';
-                document.getElementById('email').value = '';
-                document.getElementById('username').value = '';
-                document.getElementById('name').value = '';
+                document.getElementById('first_name').value = '';
+                document.getElementById('last_name').value = '';
+                document.getElementById('complete_address').value = '';
+                document.getElementById('postal_code').value = '';
                 document.getElementById('contact_number').value = '';
-                document.getElementById('password').value = '';
             }
         </script>
         <script>
             function editrecord(id) {
                 $.ajax({
-                    url: 'editUserWeb/' +
-                        id, // Ensure this URL matches the route defined in your Laravel routes file
+                    url: '/admin/getuseraddress/' + id,
                     method: 'GET',
                     success: function(response) {
                         console.log(response);
+                        console.log(response.id);
 
-                        document.getElementById('exampleModalLabel').innerHTML = 'Update Document Type';
+                        document.getElementById('exampleModalLabel').innerHTML = 'Update Payment';
                         document.getElementById('add-btn').innerHTML = 'Update';
                         document.getElementById('id').value = response.id;
-                        document.getElementById('name').value = response.name;
-                        document.getElementById('email').value = response.email;
-                        document.getElementById('username').value = response.username;
+                        document.getElementById('first_name').value = response.first_name;
+                        document.getElementById('last_name').value = response.last_name;
+                        document.getElementById('complete_address').value = response.name;
+                        document.getElementById('postal_code').value = response.postal_code;
                         document.getElementById('contact_number').value = response.contact_number;
-                        document.getElementById('password').value = response.password;
                     },
                     error: function(xhr, status, error) {
                         console.error('Error fetching data:', error);

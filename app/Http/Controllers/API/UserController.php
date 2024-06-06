@@ -867,11 +867,27 @@ class UserController extends Controller
         // }
 
         // $user_list = $user_list->orderBy('id','desc')->paginate($per_page);
-        $user_list = $user_list->select('users.*', 'countries.name as country_name', 'cities.name as city_name')->orderBy('users.id', 'desc')
-            ->leftjoin('countries', 'countries.id', 'users.country_id')
-            ->leftjoin('cities', 'cities.id', 'users.city_id')
-            ->get();
+        // $user_list = $user_list->select('users.*', 'countries.name as country_name', 'cities.name as city_name')->orderBy('users.id', 'desc')
+        //     ->leftjoin('countries', 'countries.id', 'users.country_id')
+        //     ->leftjoin('cities', 'cities.id', 'users.city_id')
+        //     ->get();
 
+        $user_list = User::select(
+            'users.id','users.name','users.contact_number','users.email','users.created_at','users.status',
+            'countries.name as country_name',
+            'cities.name as city_name',
+            DB::raw('SUM(orders.total_amount) as totalInvoiceAmt'),
+            DB::raw('SUM(payments.total_amount) as totalPaidAmt')
+        )
+        ->leftJoin('countries', 'countries.id', '=', 'users.country_id')
+        ->leftJoin('cities', 'cities.id', '=', 'users.city_id')
+        ->leftJoin('orders', 'orders.client_id', '=', 'users.id')
+        ->leftJoin('payments', 'payments.client_id', '=', 'users.id')
+        ->groupBy('users.id', 'countries.name', 'cities.name','users.name','users.contact_number','users.email','users.created_at','users.status')
+        ->where('users.user_type','client')
+        ->orderBy('users.id', 'desc')
+        ->get();
+            // dd($user_list);
         $items = UserResource::collection($user_list);
 
         // $response = [

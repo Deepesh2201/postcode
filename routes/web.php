@@ -120,7 +120,10 @@ Route::prefix('admin/')->group(function () {
     Route::post('getaddressdata', [API\UserController::class, 'getaddressdata']);
     Route::get('drivers', [API\UserController::class, 'userListWebDrivers']);
     Route::get('logout', [API\UserController::class, 'logoutweb']);
-
+    Route::get('payments', [App\Http\Controllers\PaymentController::class, 'payments']);
+    Route::post('makepayment', [App\Http\Controllers\PaymentController::class, 'makepayment']);
+    Route::post('paymentsearch', [App\Http\Controllers\PaymentController::class, 'paymentsearch']);
+    
     // });
 });
 
