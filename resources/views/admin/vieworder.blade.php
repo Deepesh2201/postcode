@@ -455,8 +455,7 @@
 
     
       <p><strong>Fixed Charges:</strong> <span id="subtotal">{{$orderData->fixed_charges}}</span></p>
-      <p><strong>Moms:</strong> <span id="tax-amount">{{$orderData->}}</span></p>
-      <p><strong>Total:</strong> <span id="total">0,00 DKK</span></p>
+      <p><strong>Total:</strong> <span id="total">£{{$orderData->total_amount}}</span></p>
 
     <div class="abc">
         <button class="add-row-btn no-print" onclick="print()">Print</button>
